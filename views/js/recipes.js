@@ -1,12 +1,12 @@
-items = ["hot", "cold", "sweet", "savoury", "salty", "chocolate", "bitter",
-"spicy", "crunchy", "greasy", "creamy", "chewy", "vegetables", "meat",
-"comfort", "snack", "meal", "breakfast", "lunch", "dinner", "cake", "biscuit",
-"baked", "crispy", "bread", "dessert"],
-
 $(document).ready(() => {
   $('#recipeSearch').selectize({
     delimiter: ',',
     create: true,
-    options: items
+    create: function(input) {
+      return {
+        value: input,
+        text: input
+      }
+    }
   });
 })

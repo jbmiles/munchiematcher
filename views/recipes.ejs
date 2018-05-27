@@ -9,7 +9,14 @@
 
     <body>
       <div class="container">
-        <input type="text" id="recipeSearch" />
+        <div class="col s12">
+          <!-- tag search -->
+          <select id="recipeSearch" placeholder="Select some tags...">
+            <% tags.forEach(tag => { %>
+              <option value=<%- tag %> ><%- tag %></option>
+            <% }) %>
+
+        </div>
         <!-- Page Content goes here -->
         <% recipes.forEach(recipe => { %>
           <div class="col s4">recipe.name</div>

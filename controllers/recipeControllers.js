@@ -5,7 +5,11 @@ async function getAllRecipes(req, res) {
   const recipes = await allRecipeQuery;
   console.log(recipes);
   res.render('../views/recipes.ejs', {
-    recipes
+    recipes,
+    tags: ["hot", "cold", "sweet", "savoury", "salty", "chocolate", "bitter",
+    "spicy", "crunchy", "greasy", "creamy", "chewy", "vegetables", "meat",
+    "comfort", "snack", "meal", "breakfast", "lunch", "dinner", "cake", "biscuit",
+    "baked", "crispy", "bread", "dessert"]
   });
 }
 
