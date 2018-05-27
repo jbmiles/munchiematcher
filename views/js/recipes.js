@@ -4,7 +4,7 @@ items = ["hot", "cold", "sweet", "savoury", "salty", "chocolate", "bitter",
 "baked", "crispy", "bread", "dessert"],
 
 $(document).ready(() => {
-  $('recipeSearch').selectize({
+  $('#recipeSearch').selectize({
     delimiter: ',',
     create: true,
     options: items,
