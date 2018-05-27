@@ -20,7 +20,7 @@ const recipeSchema = mongoose.Schema({
     enum: ["hot", "cold", "sweet", "savoury", "salty", "chocolate", "bitter",
     "spicy", "crunchy", "greasy", "creamy", "chewy", "vegetables", "meat",
     "comfort", "snack", "meal", "breakfast", "lunch", "dinner", "cake", "biscuit",
-    "baked", "crispy", "bread", "dessert", ""],
+    "baked", "crispy", "bread", "dessert"],
     required: "Please specify at least one tag"
   }]
 })
