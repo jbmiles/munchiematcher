@@ -27,7 +27,7 @@ function deleteRecipe(req, res) {
 
 module.exports = {
   getAllRecipes,
-  addRecipes,
+  addNewRecipe,
   getRecipe,
   updateRecipe,
   deleteRecipe

@@ -10,7 +10,6 @@ module.exports = function addRoutes(router) {
   router.post('/recipes', controllers.recipeControllers.addNewRecipe);
 
   router.get('/recipes/:name', controllers.recipeControllers.getRecipe);
-  router.post('/recipes/:name', controllers.recipeControllers.addRecipe);
   router.patch('/recipes/:name', controllers.recipeControllers.updateRecipe);
   router.delete('/recipes/:name', controllers.recipeControllers.deleteRecipe);
 }
