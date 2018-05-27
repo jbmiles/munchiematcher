@@ -1,22 +1,27 @@
+const Recipe = require('../models/recipe.js');
 
+async function getAllRecipes(req, res) {
+  const allRecipeQuery = Recipe.find();
+  const recipes = await allRecipeQuery;
+  console.log(recipes);
+  res.render('../views/recipes.ejs', {
+    recipes
+  });
+}
 
-function getAllRecipes(req, res) {
+async function addNewRecipe(req, res) {
   return null;
 }
 
-function addNewRecipe(req, res) {
+async function getRecipe(req, res) {
   return null;
 }
 
-function getRecipe(req, res) {
+async function updateRecipe(req, res) {
   return null;
 }
 
-function updateRecipe(req, res) {
-  return null;
-}
-
-function deleteRecipe(req, res) {
+async function deleteRecipe(req, res) {
   return null;
 }
 
