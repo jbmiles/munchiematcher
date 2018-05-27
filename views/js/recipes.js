@@ -7,6 +7,6 @@ $(document).ready(() => {
   $('#recipeSearch').selectize({
     delimiter: ',',
     create: true,
-    options: items,
+    options: items
   });
 })
