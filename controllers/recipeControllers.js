@@ -1,5 +1,13 @@
 const Recipe = require('../models/recipe.js');
 
+function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
 async function getAllRecipes(req, res) {
   const allRecipeQuery = Recipe.find();
   const recipes = await allRecipeQuery.exec();
@@ -12,6 +20,7 @@ async function getAllRecipes(req, res) {
   tags.forEach((tag) => {
     tagObject[tag] = null;
   })
+  shuffle(recipes); //Random recipes go to top for user
   res.render('../views/recipes.ejs', {
     recipes,
     tags: tagObject

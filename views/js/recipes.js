@@ -3,8 +3,13 @@ $(document).ready(function() {
   $('.tabs').tabs();
   $('.collapsible').collapsible();
 
+//Only fix I could think of, having a maximum 50 tags
   let options = {
-    valueNames: ["card-title", "tags", "cookTime", "numServings", "recipeCost"]
+    valueNames: ["card-title", "cookTime", "numServings", "recipeCost",
+  "tags0", "tags1", "tags2", "tags3", "tags4", "tags5", "tags6", "tags7", "tags8", "tags9", "tags10", "tags11", "tags12", "tags13", "tags14", "tags15",
+ "tags16", "tags17", "tags18", "tags19", "tags20", "tags21", "tags22", "tags23", "tags24", "tags25", "tags26", "tags27", "tags28", "tags29", "tags30",
+ "tags31", "tags32", "tags33", "tags34", "tags35", "tags36", "tags37", "tags38", "tags39", "tags40", "tags41", "tags42", "tags43", "tags44", "tags45",
+ "tags46", "tags47", "tags48", "tags49"]
   }
 
   let recipeList = new List('recipeList', options);
@@ -52,6 +57,7 @@ $(document).ready(function() {
     let passTime = false;
     let passCost = false;
     let passServings = false;
+    let passTags = true;
 
     let timeValue = item.values().cookTime;
     let timeBounds = timeSlider.noUiSlider.get().map(e => parseInt(e));
@@ -61,6 +67,13 @@ $(document).ready(function() {
 
     let servingsValue = item.values().numServings;
     let servingsBounds = servingsSlider.noUiSlider.get().map(e => parseInt(e));
+    let chipInstance = M.Chips.getInstance($(".tagSearchChips"));
+    let recipeTagSet = Object.values(item.values());
+    chipInstance.chipsData.forEach(tag => {
+      if (recipeTagSet.indexOf(tag.tag) < 0) {
+        passTags = false;
+      }
+    });
 
     if (timeValue >= timeBounds[0] && timeValue <= timeBounds[1]) {
       passTime = true;
@@ -71,8 +84,17 @@ $(document).ready(function() {
     if (servingsValue >= servingsBounds[0] && servingsValue <= servingsBounds[1]) {
       passServings = true;
     }
-    return passTime && passCost && passServings;
+    return passTime && passCost && passServings && passTags;
   }
+
+  let chipInstance = M.Chips.getInstance($(".tagSearchChips"));
+  chipInstance.options.onChipAdd = function() {
+    recipeList.filter(filter);
+  };
+  chipInstance.options.onChipDelete = function() {
+    recipeList.filter(filter);
+  };
+
 
   costSlider.noUiSlider.on('update', function() {
     recipeList.filter(filter);
@@ -101,7 +123,7 @@ $(document).ready(function() {
   })
 
   $("#addRecipe").submit(function() {
-    var chipInstance = M.Chips.getInstance($(".chips"));
+    var chipInstance = M.Chips.getInstance($(".recipeSubmitChips"));
     chipInstance.chipsData.forEach((tag, index) => {
       $('<input />').attr('type', 'hidden')
           .attr(`name`, `tags[${index}]`)
