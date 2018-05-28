@@ -1,13 +1,84 @@
 $(document).ready(function() {
   $('select').formSelect();
   $('.tabs').tabs();
+  $('.collapsible').collapsible();
 
   let options = {
-    valueNames: ["card-title", "tags"]
+    valueNames: ["card-title", "tags", "cookTime", "numServings", "recipeCost"]
   }
 
   let recipeList = new List('recipeList', options);
-  console.log(recipeList);
+
+  let timeSlider = document.getElementById('timeSlider');
+  noUiSlider.create(timeSlider, {
+    start: [0, 180],
+    connect: true,
+    step: 1,
+    orientation: "horizontal",
+    range: {
+      min: 0,
+      max: 180,
+    },
+    tooltips: true
+  })
+
+  let costSlider = document.getElementById('costSlider');
+  noUiSlider.create(costSlider, {
+    start: [0, 50],
+    connect: true,
+    step: 1,
+    orientation: "horizontal",
+    range: {
+      min: 0,
+      max: 50,
+    },
+    tooltips: true
+  })
+
+  costSlider.noUiSlider.on('update', function() {
+    recipeList.filter(function(item) {
+      let passTime = false;
+      let passCost = false;
+
+      let timeValue = item.values().cookTime;
+      let timeBounds = timeSlider.noUiSlider.get().map(e => parseInt(e));
+
+      let costValue = item.values().recipeCost;
+      let costBounds = costSlider.noUiSlider.get().map(e => parseInt(e));
+
+      if (timeValue > timeBounds[0] && timeValue < timeBounds[1]) {
+        passTime = true;
+      }
+      if (costValue > costBounds[0] && costValue < costBounds[1]) {
+        passCost = true;
+      }
+      return passTime && passCost;
+    })
+  })
+
+  timeSlider.noUiSlider.on('update', function() {
+    recipeList.filter(function(item) {
+      let passTime = false;
+      let passCost = false;
+
+      let timeValue = item.values().cookTime;
+      let timeBounds = timeSlider.noUiSlider.get().map(e => parseInt(e));
+
+      let costValue = item.values().recipeCost;
+      let costBounds = costSlider.noUiSlider.get().map(e => parseInt(e));
+
+      if (timeValue > timeBounds[0] && timeValue < timeBounds[1]) {
+        passTime = true;
+      }
+      if (costValue > costBounds[0] && costValue < costBounds[1]) {
+        passCost = true;
+      }
+      return passTime && passCost;
+    })
+  })
+
+
+
 
   $('#addIngredient').click(function() {
     let numIngredients = $('.ingredientRow').length
@@ -30,7 +101,8 @@ $(document).ready(function() {
     })
     return true;
   })
-})
+});
+
 
 function createMethodRow(num) {
   let outerdiv = $('<div />', {
