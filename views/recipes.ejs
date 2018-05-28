@@ -53,10 +53,11 @@
                 <div class="card small">
                   <div class="card-image">
                     <img src=<%- recipe.image %> />
-                    <span class="card-title"><%- recipe.name %></span>
+                    <span class="card-title"><h5><%- recipe.name %></h5></span>
                   </div>
                   <div class="card-content">
-                    <p class="valign-wrapper"><i class="material-icons">av_timer</i><span class="cookTime"><%- `${recipe.prepTime + recipe.cookTime}` %></span>
+                    <p class="valign-wrapper">
+                      <i class="material-icons">av_timer</i><span class="cookTime"><%- `${recipe.prepTime + recipe.cookTime}` %></span>
                        <i class="material-icons">person</i><span class="numServings"><%- recipe.numServings %></span>
                        <i class="material-icons">attach_money</i><span class="recipeCost"><%- recipe.cost %></p></span>
                   </div>

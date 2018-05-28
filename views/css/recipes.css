@@ -1,3 +1,6 @@
 .card.small div:nth-last-child(-n+50)  {
   visibility: hidden;
 }
+/* .card-title {
+  color: black !important;
+} */
