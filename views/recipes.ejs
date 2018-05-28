@@ -9,38 +9,48 @@
     <body>
       <%- include('navbar.ejs') %>
       <div class="container">
-        <div class="row nav-wrapper">
-          <div class="col s12">
-            <div class="input-field">
-              <input id="search" type="search" required>
-              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-              <i class="material-icons">close</i>
-            </div>
-          </div>
-        </div>
         <!-- Page Content goes here -->
-        <% recipes.forEach((recipe, count) => { %>
-          <% if (count % 3 === 0) { %>
-            <% if (count != 0) { %>
-              </div>
-            <% } %>
-            <div class="row">
-          <% } %>
-          <div class="col s4">
-            <div class="card small">
-              <div class="card-image">
-                <img src=<%- recipe.image %>>
-                <span class="card-title"><%- recipe.name %></span>
-              </div>
-              <div class="card-content">
-                <p><i class="material-icons">av_timer</i><%- `${recipe.prepTime + recipe.cookTime}` %> <i class="material-icons">person</i><%- recipe.numServings %> <i class="material-icons">attach_money</i><%- recipe.cost %></p>
-              </div>
-              <div class="card-action">
-                <a class="waves-effect waves-light btn" href=<%- `recipes/${recipe.urlName}` %> >View Recipe</a>
+        <div id="recipeList">
+          <div class="row nav-wrapper">
+            <div class="col s12">
+              <div class="input-field">
+                <input id="search" type="search" class="search" placeholder="Search by name or tags" required>
+                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                <i class="material-icons">close</i>
               </div>
             </div>
           </div>
-        <% }) %>
+
+          <ul>
+          <% recipes.forEach((recipe, count) => { %>
+            <% if (count % 3 === 0) { %>
+              <% if (count != 0) { %>
+                </div>
+              <% } %>
+              <div class="row list">
+            <% } %>
+            <div class="col s4">
+              <li>
+                <div class="card small">
+                  <div class="card-image">
+                    <img src=<%- recipe.image %> />
+                    <span class="card-title"><%- recipe.name %></span>
+                  </div>
+                  <div class="card-content">
+                    <p><i class="material-icons">av_timer</i><%- `${recipe.prepTime + recipe.cookTime}` %> <i class="material-icons">person</i><%- recipe.numServings %> <i class="material-icons">attach_money</i><%- recipe.cost %></p>
+                  </div>
+                  <div class="card-action">
+                    <a class="waves-effect waves-light btn" href=<%- `recipes/${recipe.urlName}` %> >View Recipe</a>
+                  </div>
+                  <% recipe.tags.forEach(tag => { %>
+                    <div class="tags"><%- tag %></div>
+                  <% }) %>
+                </div>
+              </li>
+            </div>
+          <% }) %>
+          </ul>
+        </div>
       </div>
 
       <!-- Add recipe form -->
@@ -137,6 +147,7 @@
       crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
       <script src="js/recipes.js"></script>
+      <script src="js/list.min.js"></script>
       <script>
       var tags = <%- JSON.stringify(tags) %>
       $('.chips-autocomplete').chips({

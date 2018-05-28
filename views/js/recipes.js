@@ -2,6 +2,13 @@ $(document).ready(function() {
   $('select').formSelect();
   $('.tabs').tabs();
 
+  let options = {
+    valueNames: ["card-title", "tags"]
+  }
+
+  let recipeList = new List('recipeList', options);
+  console.log(recipeList);
+
   $('#addIngredient').click(function() {
     let numIngredients = $('.ingredientRow').length
     $('#ingredients').append(createIngredientRow(numIngredients));
