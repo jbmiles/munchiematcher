@@ -7,10 +7,39 @@
     </head>
 
     <body>
+      <%- include('navbar.ejs') %>
       <div class="container">
+        <div class="row nav-wrapper">
+          <div class="col s12">
+            <div class="input-field">
+              <input id="search" type="search" required>
+              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+              <i class="material-icons">close</i>
+            </div>
+          </div>
+        </div>
         <!-- Page Content goes here -->
-        <% recipes.forEach(recipe => { %>
-          <div class="col s4">recipe.name</div>
+        <% recipes.forEach((recipe, count) => { %>
+          <% if (count % 3 === 0) { %>
+            <% if (count != 0) { %>
+              </div>
+            <% } %>
+            <div class="row">
+          <% } %>
+          <div class="col s4">
+            <div class="card small">
+              <div class="card-image">
+                <img src=<%- recipe.image %>>
+                <span class="card-title"><%- recipe.name %></span>
+              </div>
+              <div class="card-content">
+                <p><i class="material-icons">av_timer</i><%- `${recipe.prepTime + recipe.cookTime}` %> <i class="material-icons">person</i><%- recipe.numServings %> <i class="material-icons">attach_money</i><%- recipe.cost %></p>
+              </div>
+              <div class="card-action">
+                <a class="waves-effect waves-light btn" href=<%- `recipes/${recipe.urlName}` %> >View Recipe</a>
+              </div>
+            </div>
+          </div>
         <% }) %>
       </div>
 
@@ -20,6 +49,12 @@
           <div class="input-field col s12">
             <input id="name" type="text"  name="name" class="validate">
             <label for="name">Recipe Name</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="image" type="url"  name="image" class="validate">
+            <label for="image">Recipe Image</label>
           </div>
         </div>
         <div class="row">
@@ -62,6 +97,9 @@
                   <option value="tbsp">Tablespoon</option>
                   <option value="tsp">Teaspoon</option>
                   <option valuie="cup">Cup</option>
+                </optgroup>
+                <optgroup label="Other">
+                  <option value="count">Count</option>
                 </optgroup>
                 <label for="unit0">Unit</label>
               </select>

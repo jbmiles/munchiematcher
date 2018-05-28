@@ -1,5 +1,6 @@
 $(document).ready(function() {
   $('select').formSelect();
+  $('.tabs').tabs();
 
   $('#addIngredient').click(function() {
     let numIngredients = $('.ingredientRow').length
@@ -94,6 +95,9 @@ function createUnitDiv(num) {
                     <option value="tbsp">Tablespoon</option>
                     <option value="tsp">Teaspoon</option>
                     <option valuie="cup">Cup</option>
+                  </optgroup>
+                  <optgroup label="Other">
+                    <option value="count">Count</option>
                   </optgroup>
                   <label for="unit${num}">Unit</label>
                 </select>`);

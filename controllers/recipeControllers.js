@@ -21,6 +21,7 @@ async function getAllRecipes(req, res) {
 async function addNewRecipe(req, res) {
   let newRecipe = new Recipe({
     name: req.body.name,
+    urlName: req.body.name.split(' ').join('_'), //Replaces ' ' with '_'
     image: req.body.image,
     prepTime: req.body.prepTime,
     cookTime: req.body.cookTime,
@@ -35,7 +36,7 @@ async function addNewRecipe(req, res) {
 }
 
 async function getRecipe(req, res) {
-  let query = { name: req.query.name }
+  let query = { urlName: req.params.name }
   let recipeGetQuery = Recipe.findOne(query);
   let recipeDoc = await recipeGetQuery.exec();
   res.render('../views/recipe.ejs', {

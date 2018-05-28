@@ -11,7 +11,51 @@
     </head>
 
     <body>
+      <%- include('navbar.ejs') %>
+      <div class="container">
+        <div class="row">
+          <div class="col s12 center-align">
+            <img class="responsive-img" src=<%- recipe.image %> />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s4">
+            <p class="center-align"><i class="material-icons">av_timer</i><%- `${recipe.prepTime + recipe.cookTime}` %></p>
+          </div>
+          <div class="col s4">
+            <p class="center-align"><i class="material-icons">person</i><%- recipe.numServings %></p>
+          </div>
+          <div class="col s4">
+            <p class="center-align"><i class="material-icons">attach_money</i><%- recipe.cost %></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col m6">
+            <div id="ingredients">
+              <ul class="collection">
+              <% recipe.ingredients.forEach(ingredient => { %>
+                <li class="collection-item">
+                  <p><%- `${ingredient.quantity} ${ingredient.unit} ${ingredient.name}` %>
+                </li>
+              <% }) %>
+              </ul>
+            </div>
+          </div>
+          <div class="col m6">
+            <div id="method">
+              <ul class="collection">
+              <% recipe.method.forEach((step, count) => { %>
+                <li class="collection-item">
+                  <span class="title"><%- `${count+1}.` %><span>
+                  <p><%-  step %></p>
+                </li>
+              <% }) %>
+              </ul>
+            </div>
+          </div>
+      </div>
 
+      </div>
       <!--JavaScript at end of body for optimized loading-->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
     </body>
