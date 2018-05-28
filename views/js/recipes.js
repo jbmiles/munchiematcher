@@ -35,46 +35,55 @@ $(document).ready(function() {
     tooltips: true
   })
 
+  let servingsSlider = document.getElementById('servingsSlider');
+  noUiSlider.create(servingsSlider, {
+    start: [0, 25],
+    connect: true,
+    step: 1,
+    orientation: "horizontal",
+    range: {
+      min: 0,
+      max: 25,
+    },
+    tooltips: true
+  })
+
+  let filter = function(item) {
+    let passTime = false;
+    let passCost = false;
+    let passServings = false;
+
+    let timeValue = item.values().cookTime;
+    let timeBounds = timeSlider.noUiSlider.get().map(e => parseInt(e));
+
+    let costValue = item.values().recipeCost;
+    let costBounds = costSlider.noUiSlider.get().map(e => parseInt(e));
+
+    let servingsValue = item.values().numServings;
+    let servingsBounds = servingsSlider.noUiSlider.get().map(e => parseInt(e));
+
+    if (timeValue >= timeBounds[0] && timeValue <= timeBounds[1]) {
+      passTime = true;
+    }
+    if (costValue >= costBounds[0] && costValue <= costBounds[1]) {
+      passCost = true;
+    }
+    if (servingsValue >= servingsBounds[0] && servingsValue <= servingsBounds[1]) {
+      passServings = true;
+    }
+    return passTime && passCost && passServings;
+  }
+
   costSlider.noUiSlider.on('update', function() {
-    recipeList.filter(function(item) {
-      let passTime = false;
-      let passCost = false;
-
-      let timeValue = item.values().cookTime;
-      let timeBounds = timeSlider.noUiSlider.get().map(e => parseInt(e));
-
-      let costValue = item.values().recipeCost;
-      let costBounds = costSlider.noUiSlider.get().map(e => parseInt(e));
-
-      if (timeValue > timeBounds[0] && timeValue < timeBounds[1]) {
-        passTime = true;
-      }
-      if (costValue > costBounds[0] && costValue < costBounds[1]) {
-        passCost = true;
-      }
-      return passTime && passCost;
-    })
+    recipeList.filter(filter);
   })
 
   timeSlider.noUiSlider.on('update', function() {
-    recipeList.filter(function(item) {
-      let passTime = false;
-      let passCost = false;
+    recipeList.filter(filter);
+  })
 
-      let timeValue = item.values().cookTime;
-      let timeBounds = timeSlider.noUiSlider.get().map(e => parseInt(e));
-
-      let costValue = item.values().recipeCost;
-      let costBounds = costSlider.noUiSlider.get().map(e => parseInt(e));
-
-      if (timeValue > timeBounds[0] && timeValue < timeBounds[1]) {
-        passTime = true;
-      }
-      if (costValue > costBounds[0] && costValue < costBounds[1]) {
-        passCost = true;
-      }
-      return passTime && passCost;
-    })
+  servingsSlider.noUiSlider.on('update', function() {
+    recipeList.filter(filter);
   })
 
 
