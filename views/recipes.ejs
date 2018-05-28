@@ -36,6 +36,7 @@
                 <label for="servingsSlider">Number of servings</label>
 
                 <div id="tagSearch" class="chips tagSearchChips"></div>
+                <div id="tagSearch" class="chips ingredientSearchChips"></div>
               </div>
             </li>
           </ul>
@@ -65,10 +66,13 @@
                     <a class="waves-effect waves-light btn" href=<%- `recipes/${recipe.urlName}` %> >View Recipe</a>
                   </div>
                   <% for (let count=0; count<50; count++) {%>
-                    <% if (count > recipe.tags.size) { %>
-                      <div class=<%- "tags"+count %> >""</div>
-                    <% } else { %>
                     <div class=<%- `tags${count}` %> ><%- recipe.tags[count] %></div>
+                  <% } %>
+                  <% for (let count=0; count<25; count++) {%>
+                    <% if (count >= recipe.ingredients.length) { %>
+                      <div class=<%- "ingredient"+count %> >""</div>
+                    <% } else { %>
+                    <div class=<%- `ingredient${count}` %> ><%- recipe.ingredients[count].name %></div>
                   <% }} %>
                 </div>
               </li>
@@ -176,6 +180,7 @@
       <script src="js/nouislider.min.js"></script>
       <script>
       var tags = <%- JSON.stringify(tags) %>
+      var ingredients = <%- JSON.stringify(ingredients) %>
       $('.recipeSubmitChips').chips({
         placeholder: 'Enter tags',
         secondaryPlaceholder: '+tag',
@@ -186,7 +191,7 @@
        }
      });
      $('.tagSearchChips').chips({
-       placeholder: 'Enter tags',
+       placeholder: 'Tags',
        secondaryPlaceholder: '+tag',
        autocompleteOptions: {
          data: tags,
@@ -195,6 +200,16 @@
       },
       limit: 50
     });
+
+    $('.ingredientSearchChips').chips({
+      placeholder: 'Ingredients',
+      secondaryPlaceholder: '+ingredient',
+      autocompleteOptions: {
+        data: ingredients,
+        //On chip add is set in recipes.js
+     },
+     limit: 25
+   });
      </script>
     </body>
 </html>

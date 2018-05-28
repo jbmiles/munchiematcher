@@ -9,7 +9,9 @@ $(document).ready(function() {
   "tags0", "tags1", "tags2", "tags3", "tags4", "tags5", "tags6", "tags7", "tags8", "tags9", "tags10", "tags11", "tags12", "tags13", "tags14", "tags15",
  "tags16", "tags17", "tags18", "tags19", "tags20", "tags21", "tags22", "tags23", "tags24", "tags25", "tags26", "tags27", "tags28", "tags29", "tags30",
  "tags31", "tags32", "tags33", "tags34", "tags35", "tags36", "tags37", "tags38", "tags39", "tags40", "tags41", "tags42", "tags43", "tags44", "tags45",
- "tags46", "tags47", "tags48", "tags49"]
+ "tags46", "tags47", "tags48", "tags49", "ingredient0", "ingredient1", "ingredient2", "ingredient3", "ingredient4", "ingredient5", "ingredient6",
+ "ingredient7", "ingredient8", "ingredient9","ingredient10", "ingredient11", "ingredient12", "ingredient13", "ingredient14", "ingredient15", "ingredient16",
+ "ingredient17", "ingredient18", "ingrdient19", "ingredient20", "ingredient21", "ingredient22", "ingredient23", "ingredient24"]
   }
 
   let recipeList = new List('recipeList', options);
@@ -58,6 +60,7 @@ $(document).ready(function() {
     let passCost = false;
     let passServings = false;
     let passTags = true;
+    let passIngredients = true;
 
     let timeValue = item.values().cookTime;
     let timeBounds = timeSlider.noUiSlider.get().map(e => parseInt(e));
@@ -67,13 +70,23 @@ $(document).ready(function() {
 
     let servingsValue = item.values().numServings;
     let servingsBounds = servingsSlider.noUiSlider.get().map(e => parseInt(e));
-    let chipInstance = M.Chips.getInstance($(".tagSearchChips"));
+
+
+    let tagChipInstance = M.Chips.getInstance($(".tagSearchChips"));
     let recipeTagSet = Object.values(item.values());
-    chipInstance.chipsData.forEach(tag => {
+    tagChipInstance.chipsData.forEach(tag => {
       if (recipeTagSet.indexOf(tag.tag) < 0) {
         passTags = false;
       }
     });
+
+    let ingredientChipInstance =  M.Chips.getInstance($(".ingredientSearchChips"));
+    let recipeIngredientSet = Object.values(item.values());
+    ingredientChipInstance.chipsData.forEach(ingredient => {
+      if (recipeIngredientSet.indexOf(ingredient.tag) < 0) {
+        passIngredients = false;
+      }
+    })
 
     if (timeValue >= timeBounds[0] && timeValue <= timeBounds[1]) {
       passTime = true;
@@ -84,14 +97,22 @@ $(document).ready(function() {
     if (servingsValue >= servingsBounds[0] && servingsValue <= servingsBounds[1]) {
       passServings = true;
     }
-    return passTime && passCost && passServings && passTags;
+    return passTime && passCost && passServings && passTags && passIngredients;
   }
 
-  let chipInstance = M.Chips.getInstance($(".tagSearchChips"));
-  chipInstance.options.onChipAdd = function() {
+  let tagChips = M.Chips.getInstance($(".tagSearchChips"));
+  tagChips.options.onChipAdd = function() {
     recipeList.filter(filter);
   };
-  chipInstance.options.onChipDelete = function() {
+  tagChips.options.onChipDelete = function() {
+    recipeList.filter(filter);
+  };
+
+  let ingredientChips = M.Chips.getInstance($(".ingredientSearchChips"));
+  ingredientChips.options.onChipAdd = function() {
+    recipeList.filter(filter);
+  };
+  ingredientChips.options.onChipDelete = function() {
     recipeList.filter(filter);
   };
 

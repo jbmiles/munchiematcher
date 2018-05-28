@@ -17,13 +17,22 @@ async function getAllRecipes(req, res) {
   "comfort", "snack", "meal", "breakfast", "lunch", "dinner", "cake", "biscuit",
   "baked", "crispy", "bread", "dessert"];
   const tagObject = {};
+  const ingredientLists = recipes.map(e => e.ingredients).map(e => e.map(e2 => e2.name));
+  const mergedIngredientList = [].concat.apply([], ingredientLists);
+  const ingredientObject = {}
+
+  //Weird format that list.js requires
+  mergedIngredientList.forEach(ingredient => {
+    ingredientObject[ingredient] = null;
+  })
   tags.forEach((tag) => {
     tagObject[tag] = null;
   })
   shuffle(recipes); //Random recipes go to top for user
   res.render('../views/recipes.ejs', {
     recipes,
-    tags: tagObject
+    tags: tagObject,
+    ingredients: ingredientObject
   });
 }
 
@@ -58,7 +67,6 @@ async function updateRecipe(req, res) {
   let query = { name: req.body.name }
   let recipeUdateQuery = Recipe.findOneAndUpdate(query, req.body);
   let updatedRecipeDoc = await recipeUdateQuery.exec();
-  console.log(updatedRecipeDoc);
   res.redirect(`/recipes/${req.body.name}`);
   return null;
 }

@@ -1,4 +1,4 @@
-.card.small div:nth-last-child(-n+50)  {
+.card.small div:nth-last-child(-n+75)  {
   visibility: hidden;
 }
 /* .card-title {
