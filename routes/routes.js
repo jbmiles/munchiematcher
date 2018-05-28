@@ -17,5 +17,5 @@ module.exports = function addRoutes(router) {
 
   router.get('/recipes/:name', controllers.recipeControllers.getRecipe);
   router.patch('/recipes/:name', inDevelopmentMode, controllers.recipeControllers.updateRecipe);
-  router.delete('/recipes/:name', inDevelopMentMode, controllers.recipeControllers.deleteRecipe);
+  router.delete('/recipes/:name', inDevelopmentMode, controllers.recipeControllers.deleteRecipe);
 }
