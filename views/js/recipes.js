@@ -73,7 +73,6 @@ $(document).ready(function() {
 
     let tagChipInstance = M.Chips.getInstance($(".tagSearchChips"));
     let recipeTagSet = Object.values(item.values());
-    console.log(recipeTagSet);
     tagChipInstance.chipsData.forEach(tag => {
       if (recipeTagSet.indexOf(tag.tag) < 0) {
         passTags = false;

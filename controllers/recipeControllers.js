@@ -11,12 +11,16 @@ function shuffle(a) {
 async function getAllRecipes(req, res) {
   const allRecipeQuery = Recipe.find();
   const recipes = await allRecipeQuery.exec();
-  //Read tags from DB later
-  const tags = ["hot", "cold", "sweet", "savoury", "salty", "chocolate", "bitter",
-  "spicy", "crunchy", "greasy", "creamy", "chewy", "vegetables", "meat",
-  "comfort", "snack", "meal", "breakfast", "lunch", "dinner", "cake", "biscuit",
-  "baked", "crispy", "bread", "dessert"];
+
+  const tagList = recipes.map(e => e.tags);
+  const mergedTagList = [].concat.apply([], tagList);
   const tagObject = {};
+  //Weird format that list.js requires
+  mergedTagList.forEach((tag) => {
+    tagObject[tag] = null;
+  })
+
+
   const ingredientLists = recipes.map(e => e.ingredients).map(e => e.map(e2 => e2.name));
   const mergedIngredientList = [].concat.apply([], ingredientLists);
   const ingredientObject = {}
@@ -24,9 +28,6 @@ async function getAllRecipes(req, res) {
   //Weird format that list.js requires
   mergedIngredientList.forEach(ingredient => {
     ingredientObject[ingredient] = null;
-  })
-  tags.forEach((tag) => {
-    tagObject[tag] = null;
   })
   shuffle(recipes); //Random recipes go to top for user
   res.render('../views/recipes.ejs', {
@@ -37,6 +38,7 @@ async function getAllRecipes(req, res) {
 }
 
 async function addNewRecipe(req, res) {
+  let recipeTags = req.body.tags.map(e => e.toLowerCase());
   let newRecipe = new Recipe({
     name: req.body.name,
     urlName: req.body.name.split(' ').join('_'), //Replaces ' ' with '_'
@@ -47,7 +49,7 @@ async function addNewRecipe(req, res) {
     cost: req.body.cost,
     ingredients: req.body.ingredients,
     method: req.body.method,
-    tags: req.body.tags
+    tags: recipeTags
   });
   await newRecipe.save();
   res.redirect(`/recipes/${req.body.name}`);
