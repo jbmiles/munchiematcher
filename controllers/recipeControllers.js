@@ -42,6 +42,7 @@ async function addNewRecipe(req, res) {
   let newRecipe = new Recipe({
     name: req.body.name,
     urlName: req.body.name.split(' ').join('_'), //Replaces ' ' with '_'
+    source: req.body.source,
     image: req.body.image,
     prepTime: req.body.prepTime,
     cookTime: req.body.cookTime,
