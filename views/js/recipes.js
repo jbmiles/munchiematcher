@@ -71,9 +71,9 @@ $(document).ready(function() {
     let servingsValue = item.values().numServings;
     let servingsBounds = servingsSlider.noUiSlider.get().map(e => parseInt(e));
 
-
     let tagChipInstance = M.Chips.getInstance($(".tagSearchChips"));
     let recipeTagSet = Object.values(item.values());
+    console.log(recipeTagSet);
     tagChipInstance.chipsData.forEach(tag => {
       if (recipeTagSet.indexOf(tag.tag) < 0) {
         passTags = false;

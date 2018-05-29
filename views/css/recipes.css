@@ -1,5 +1,9 @@
-.card.small div:nth-last-child(-n+75)  {
+.card.medium div:nth-last-child(-n+75)  {
   visibility: hidden;
+}
+
+.recipeStats {
+  margin-left: 20%;
 }
 /* .card-title {
   color: black !important;

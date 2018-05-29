@@ -51,19 +51,19 @@
             <% } %>
             <div class="col s12 m4">
               <li>
-                <div class="card small">
+                <div class="card medium">
                   <div class="card-image">
                     <img src=<%- recipe.image %> />
-                    <span class="card-title"><h5><%- recipe.name %></h5></span>
                   </div>
                   <div class="card-content">
-                    <p class="valign-wrapper">
+                    <span class="card-title flow-text"><%- recipe.name %></span>
+                  </div>
+                  <div class="card-action valign-wrapper">
+                    <a class="waves-effect waves-light btn" href=<%- `recipes/${recipe.urlName}` %> >View Recipe</a>
+                    <p class="valign-wrapper recipeStats">
                       <i class="material-icons">av_timer</i><span class="cookTime"><%- `${recipe.prepTime + recipe.cookTime}` %></span>
                        <i class="material-icons">person</i><span class="numServings"><%- recipe.numServings %></span>
-                       <i class="material-icons">attach_money</i><span class="recipeCost"><%- recipe.cost %></p></span>
-                  </div>
-                  <div class="card-action">
-                    <a class="waves-effect waves-light btn" href=<%- `recipes/${recipe.urlName}` %> >View Recipe</a>
+                       <i class="material-icons">attach_money</i><span class="recipeCost"><%- recipe.cost %></span></p>
                   </div>
                   <% for (let count=0; count<50; count++) {%>
                     <div class=<%- `tags${count}` %> ><%- recipe.tags[count] %></div>
