@@ -130,7 +130,11 @@ $(document).ready(function() {
 
 
 
-
+  $('#randomButton').click(function() {
+    const randomRecipe = recipeList.matchingItems[Math.floor(Math.random() * recipeList.matchingItems.length)];
+    let redirectURL = `recipes/${randomRecipe.values()["card-title"].split(' ').join('_')}`;
+    document.location.href = redirectURL;
+  })
   $('#addIngredient').click(function() {
     let numIngredients = $('.ingredientRow').length
     $('#ingredients').append(createIngredientRow(numIngredients));
